@@ -52,7 +52,7 @@ export default function Home() {
               <div className="text-group">
                 <div className="text-center">
                   <h1 className="mb-5 text-8xl font-bold">Welcome</h1>
-                  <h3 className="mb-7 text-4xl font-medium">to Revname Game</h3>
+                  <h3 className="mb-7 text-4xl font-medium">to Revnomen Game</h3>
                 </div>
               </div>
               <div className="button-group">
