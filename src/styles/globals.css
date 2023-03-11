@@ -2,23 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
-
-.active-player-card::before{
-    content: "";
-    border-color:black transparent transparent transparent;
-    border-width: 0.6rem 0.4rem 0rem 0.4rem;
-    border-radius: 0.2rem;
-    position:absolute;
-    top:0px;
-    left:50%;
-    transform: translateX(-50%);
+* {
+  transition: all 0.3s ease-in-out;
+}
+.active-player-card::before {
+  content: "";
+  border-color: black transparent transparent transparent;
+  border-width: 0.6rem 0.4rem 0rem 0.4rem;
+  border-radius: 0.2rem;
+  position: absolute;
+  top: 0px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
-.active-player-card{
-    position: relative;
+.active-player-card {
+  position: relative;
 }
 
-.winning-player{
-    transform: scale(1.3);
-    background-color: #d9d9d9;
+.winning-player {
+  transform: scale(1.3);
+  background-color: #d9d9d9;
+}
+
+.waiting-area > div {
+  pointer-events: none;
+}
+.waiting-area .registered-user {
+  pointer-events: auto;
+}
+.waiting-area > div.can-edit-user:hover {
+  padding-bottom: 4rem;
+}
+.waiting-area .registered-user:hover .user-action > div {
+  display: inline-block;
 }

@@ -1,11 +1,14 @@
-const GenericButton = ({ buttonLabel }: any) => {
+const GenericButton = ({ buttonClass, children, handleClick }: any) => {
+
+ 
   return (
     <>
       <button
         type="button"
-        className="continue_button inline-block py-6 px-20 rounded-lg text-2xl font-semibold bg-gray-300"
+        className={`${buttonClass} generic-button inline-block py-6 px-20 rounded-lg text-2xl font-semibold bg-gray-300`}
+        onClick={handleClick}
       >
-        {buttonLabel}
+        {children}
       </button>
     </>
   );

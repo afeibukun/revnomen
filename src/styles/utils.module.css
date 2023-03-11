@@ -3,7 +3,9 @@
 }
 
 .userAction>div{
-  position: relative;
+  position: absolute;
+  display: none;
+
 }
 
 .userAction>div:before{
@@ -14,4 +16,10 @@
   border-width: 0rem 0.625rem 0.875rem 0.625rem;
   border-color: transparent transparent rgba(156,163,175,1) transparent;
   top:-0.75rem;
+}
+
+.hiddenLetterDisplay>span{
+  left: 50%;
+  transform: translateX(-50%);
+  
 }
