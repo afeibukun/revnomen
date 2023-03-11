@@ -32,9 +32,17 @@ export const selectNoun = (categoryList: any) => {
       Math.random() * categoryOnMainArray.data.length
     );
     let selectedNoun = categoryOnMainArray.data[randomIndex];
-    let selectedNounArray = selectedNoun.toLowerCase().replace(/[^a-z]/g, '').split("");
-    let hiddenNounArray = [...selectedNounArray].fill("")
-    return { category: thisCategory, noun: selectedNoun, nounArray:selectedNounArray, hiddenNounArray: hiddenNounArray};
+    let selectedNounArray = selectedNoun
+      .toLowerCase()
+      .replace(/[^a-z]/g, "")
+      .split("");
+    let hiddenNounArray = [...selectedNounArray].fill("");
+    return {
+      category: thisCategory,
+      noun: selectedNoun,
+      nounArray: selectedNounArray,
+      hiddenNounArray: hiddenNounArray,
+    };
   });
 
   return selectedNounList;

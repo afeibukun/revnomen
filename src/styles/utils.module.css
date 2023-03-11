@@ -20,6 +20,11 @@
 
 .hiddenLetterDisplay>span{
   left: 50%;
-  transform: translateX(-50%);
-  
+  transform: translateX(-50%); 
+}
+
+.otherInfoLabel>div>*{
+  left: 50%;
+  transform: translateX(-50%); 
+  top:-10px
 }

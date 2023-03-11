@@ -26,13 +26,16 @@ export default function Home() {
       "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
     );
     dispatch({
-      type: "UPDATE_DATA",
-      key: "game_id",
-      data: gameId,
+      type: "UPDATE_MULTIPLE",
+      data: {
+        game_id: gameId,
+        is_completed: false,
+        players: [],
+        winner:[],
+      },
     });
 
-    router.push('/start')
-
+    router.push("/start");
   };
   return (
     <>
