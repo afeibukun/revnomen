@@ -1,25 +1,21 @@
-import Head from "next/head";
-import Link from "next/link";
-import Image from "next/image";
 import { useRouter } from "next/router";
+import { useContext } from "react";
+import { GameDispatchContext } from "@/context/context";
 
 import { Inter } from "next/font/google";
-import styles from "@/styles/Home.module.css";
 
-import { GameContext, GameDispatchContext } from "@/context/context";
-import { useContext } from "react";
+import Meta from "@/components/Meta";
+import GenericButton from "@/components/GenericButton";
 
 import { randomString } from "@/lib";
-import GenericButton from "@/components/GenericButton";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  const gameData = useContext(GameContext);
   const dispatch = useContext(GameDispatchContext);
   const router = useRouter();
 
-  const initializeGame = (event: any) => {
+  const handleGameInitialization = (event: any) => {
     // create game id
     let gameId = randomString(
       8,
@@ -39,12 +35,7 @@ export default function Home() {
   };
   return (
     <>
-      <Head>
-        <title>Revnomen App</title>
-        <meta name="description" content="Reveal names of names" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <Meta pageTitle="Revnomen App" />
       <main className="">
         <div className="container min-h-screen mx-auto">
           <section className="app-intro h-screen flex flex-col justify-center items-center">
@@ -58,7 +49,7 @@ export default function Home() {
               <div className="button-group">
                 <div className="text-center">
                   <GenericButton
-                    handleClick={initializeGame}
+                    handleClick={handleGameInitialization}
                     buttonClass="start-new-game"
                   >
                     Start New Game

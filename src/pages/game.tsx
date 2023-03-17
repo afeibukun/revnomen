@@ -5,6 +5,8 @@ import { useRouter } from "next/router";
 import { Inter } from "next/font/google";
 import styles from "@/styles/utils.module.css";
 
+import Meta from "@/components/Meta";
+
 import AppBranding from "@/components/AppBranding";
 import HiddenLetterInput from "@/components/HiddenLetterInput";
 import HiddenContentCategoryName from "@/components/HiddenContentCategoryName";
@@ -277,12 +279,7 @@ export default function Game() {
 
   return (
     <>
-      <Head>
-        <title>Game - Revnomen</title>
-        <meta name="description" content="Reveal names of names" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <Meta pageTitle="Game - Revnomen" />
       <main className="pb-8">
         <div className="container min-h-screen max-w-4xl mx-auto">
           <header className="app-header">
@@ -347,72 +344,46 @@ export default function Game() {
                   )}
                 </div>
               </div>
-
-              {/* <div>
-                <div className="hidden-name-letter">
-                  <div>
-                    <HiddenLetterInput categoryLabel="Cat 01 Letter 02" />
-                  </div>
-                </div>
-                <div className="hidden-name-letter">
-                  <div>
-                    <HiddenLetterInput categoryLabel="Cat 01 Letter 03" />
-                  </div>
-                </div>
-                <div className="hidden-name-letter">
-                  <div>
-                    <HiddenLetterInput categoryLabel="Cat 01 Letter 04" />
-                  </div>
-                </div>
-                <div className="hidden-name-letter">
-                  <div>
-                    <HiddenLetterInput categoryLabel="Cat 01 Letter 05" />
-                  </div>
-                </div>
-                <div className="hidden-name-letter">
-                  <div>
-                    <HiddenLetterInput categoryLabel="Cat 01 Letter 06" />
-                  </div>
-                </div>
-              </div> */}
               {gameData.is_completed ? (
                 <div className="winner-box">
                   <div className="flex justify-center items-center py-28 rounded-md mb-6 bg-gray-200">
                     <div className="px-4">
-                    {gameData.winner.length == 1 ? (
-                      <div>
-                      <h2 className="text-6xl font-bold mb-2">
-                        Woohoo
-                        </h2>
-                        <h3 className="text-4xl font-medium text-center"><span className="capitalize bg-green-100 px-2">{gameData.winner[0].name}</span> Wins</h3>
-                      </div>
-                    ) : gameData.winner.length == 2 &&
-                      gameData.players.length ? (
+                      {gameData.winner.length == 1 ? (
                         <div>
-                      <h2 className="text-6xl font-bold">
-                        Oh my!!!
-                      </h2>
-                        <h4 className="text-4xl">
-                        The game was a tie
-                        </h4>
-                        <h5 className="text-3xl">
-                        Great Job guys
-                      </h5>
-                      </div>
-                    ) : (
-                      <div>
-                      <h2 className="text-6xl font-bold">
-                        And Your winners are !!!
-                        </h2>
-                        <ul>
-                          {gameData.winner.map(
-                            (singleWinner: any, index: any) => {
-                              <li key={index} className="text-2xl capitalize bg-green-100 my-1 font-medium">singleWinner.name</li>;
-                            }
-                          )}
-                        </ul>
-                      </div>
-                    )}
+                          <h2 className="text-6xl font-bold mb-2">Woohoo</h2>
+                          <h3 className="text-4xl font-medium text-center">
+                            <span className="capitalize bg-green-100 px-2">
+                              {gameData.winner[0].name}
+                            </span>{" "}
+                            Wins
+                          </h3>
+                        </div>
+                      ) : gameData.winner.length == 2 &&
+                        gameData.players.length ? (
+                        <div>
+                          <h2 className="text-6xl font-bold">Oh my!!!</h2>
+                          <h4 className="text-4xl">The game was a tie</h4>
+                          <h5 className="text-3xl">Great Job guys</h5>
+                        </div>
+                      ) : (
+                        <div>
+                          <h2 className="text-6xl font-bold">
+                            And Your winners are !!!
+                          </h2>
+                          <ul>
+                            {gameData.winner.map(
+                              (singleWinner: any, index: any) => {
+                                <li
+                                  key={index}
+                                  className="text-2xl capitalize bg-green-100 my-1 font-medium"
+                                >
+                                  singleWinner.name
+                                </li>;
+                              }
+                            )}
+                          </ul>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -489,7 +460,10 @@ export default function Game() {
                             (singleWinner: any) =>
                               singleWinner.id === singlePlayer.id
                           )}
-                          active={gameData.active_player_id === singlePlayer.id && !gameData.is_completed }
+                          active={
+                            gameData.active_player_id === singlePlayer.id &&
+                            !gameData.is_completed
+                          }
                         />
                       ))}
                       {/* <ScoreCard
