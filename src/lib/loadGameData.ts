@@ -1,8 +1,8 @@
 import { category, nounArray } from "@/data/hidden_name";
 
 export const generateCategoryLength = () => {
-  const minCategoryLength = 5;
-  const maxCategoryLength = 12;
+  const minCategoryLength = 1; //5
+  const maxCategoryLength = 2; //12
   let selectedCategoryLength =
     Math.floor(Math.random() * (maxCategoryLength - minCategoryLength + 1)) +
     minCategoryLength;

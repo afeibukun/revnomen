@@ -1,17 +1,44 @@
-const UpdatePlayer = ({
-  singlePlayer,
-  singlePlayerName,
-  handlePlayerNameChange,
-  handlePlayerFormReset,
-  handleUpdatePlayer,
-}: any) => {
+import { useState, useEffect, useContext } from "react";
+import { GameContext, PlayerContext } from "@/context/context";
+
+import PlayerInput from "./PlayerInput";
+
+const UpdatePlayer = ({ selectedPlayer, handleViewReset }: any) => {
+  const [gameOption, gameDispatch] = useContext(GameContext);
+  const [playerOption, playerDispatch] = useContext(PlayerContext);
+  const [player, setPlayer] = useState(selectedPlayer);
+
+  const handlePlayerNameChange = (event: any) => {
+    setPlayer({ ...player, name: event.target.value });
+  };
+
+  const handleUpdatePlayer = (event: any) => {
+    event.preventDefault();
+    const updatedSinglePlayer = {
+      id: player.id,
+      name: player.name,
+      points: player.points,
+    };
+    const updatedPlayersList = playerOption.players.map((thisPlayer: any) => {
+      if (thisPlayer.id == player.id) return updatedSinglePlayer;
+      else return thisPlayer;
+    });
+    playerDispatch({
+      type: "UPDATE_DATA",
+      key: "players",
+      data: updatedPlayersList,
+    });
+    setPlayer(null);
+    handleViewReset();
+  };
+
   return (
     <div>
       <div className="edit-player-group">
         <div className="section-header">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold">
-              Update Player - {singlePlayer.name}
+              Update Player - {selectedPlayer.name}
             </h2>
           </div>
         </div>
@@ -25,19 +52,12 @@ const UpdatePlayer = ({
               <div>
                 <div className="name-input">
                   <div className="mb-4">
-                    <label
-                      htmlFor="player_name"
-                      className="text-3xl font-medium"
-                    >
-                      Player Name
-                    </label>
-                    <input
-                      type="text"
-                      id="player_name"
-                      name="player_name"
-                      className="inline-block w-full py-5 px-2 rounded-md bg-gray-300 text-3xl"
-                      value={singlePlayerName}
-                      onChange={handlePlayerNameChange}
+                    <PlayerInput
+                      inputId="player_name"
+                      inputName="player_name"
+                      inputLabel="Player Name"
+                      playerName={player.name}
+                      handlePlayerNameChange={handlePlayerNameChange}
                     />
                   </div>
                 </div>
@@ -50,7 +70,7 @@ const UpdatePlayer = ({
                   </button>
                   <button
                     type="button"
-                    onClick={handlePlayerFormReset}
+                    onClick={handleViewReset}
                     className="inline-block py-6 px-20 rounded-lg text-2xl font-semibold bg-gray-300"
                   >
                     Go Back

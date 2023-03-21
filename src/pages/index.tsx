@@ -1,6 +1,11 @@
 import { useRouter } from "next/router";
 import { useContext } from "react";
-import { GameDispatchContext } from "@/context/context";
+import { GameContext, PlayerContext, TurnContext } from "@/context/context";
+import {
+  GAME_INITIAL_STATE,
+  PLAYER_INITIAL_STATE,
+  TURN_INITIAL_STATE,
+} from "@/context/contextInitialState";
 
 import { Inter } from "next/font/google";
 
@@ -12,7 +17,9 @@ import { randomString } from "@/lib";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  const dispatch = useContext(GameDispatchContext);
+  const [gameOption, gameDispatch] = useContext(GameContext);
+  const [playerOption, playerDispatch] = useContext(PlayerContext);
+  const [turnOption, turnDispatch] = useContext(TurnContext);
   const router = useRouter();
 
   const handleGameInitialization = (event: any) => {
@@ -21,18 +28,23 @@ export default function Home() {
       8,
       "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
     );
-    dispatch({
+    gameDispatch({
       type: "UPDATE_MULTIPLE",
-      data: {
-        game_id: gameId,
-        is_completed: false,
-        players: [],
-        winner:[],
-      },
+      data: {...GAME_INITIAL_STATE,game_id: gameId,
+        is_completed: false}
+    });
+    playerDispatch({
+      type: "UPDATE_MULTIPLE",
+      data: PLAYER_INITIAL_STATE,
+    });
+    turnDispatch({
+      type: "UPDATE_MULTIPLE",
+      data: TURN_INITIAL_STATE,
     });
 
     router.push("/start");
   };
+
   return (
     <>
       <Meta pageTitle="Revnomen App" />

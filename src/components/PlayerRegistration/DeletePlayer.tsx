@@ -1,15 +1,22 @@
-import { GameContext, GameDispatchContext } from "@/context/context";
+import { GameContext, PlayerContext } from "@/context/context";
 import { SetStateAction, useContext, useEffect, useState } from "react";
 
-const DeletePlayer = ({
-  singlePlayer,
-  singlePlayerName,
-  handlePlayerFormReset,
-  handleDeletePlayer,
-}: any) => {
-  const gameData = useContext(GameContext);
-  const dispatch = useContext(GameDispatchContext);
+const DeletePlayer = ({ singlePlayer, handleViewReset }: any) => {
+  const [gameOption, gameDispatch] = useContext(GameContext);
+  const [playerOption, playerDispatch] = useContext(PlayerContext);
 
+  const handleDeletePlayer = (event: any) => {
+    event.preventDefault();
+    const updatedPlayersList = playerOption.players.filter(
+      (player: any) => player.id !== singlePlayer.id
+    );
+    playerDispatch({
+      type: "UPDATE_DATA",
+      key: "players",
+      data: updatedPlayersList,
+    });
+    handleViewReset();
+  };
   return (
     <div>
       <div className="delete-player-group">
@@ -32,7 +39,7 @@ const DeletePlayer = ({
                   <div className="mb-4">
                     <p>
                       Are you sure you want to delete Player -{" "}
-                      <em>{singlePlayerName}</em>
+                      <em>{singlePlayer.name}</em>
                     </p>
                   </div>
                 </div>
@@ -45,7 +52,7 @@ const DeletePlayer = ({
                   </button>
                   <button
                     type="button"
-                    onClick={handlePlayerFormReset}
+                    onClick={handleViewReset}
                     className="inline-block py-6 px-20 rounded-lg text-2xl font-semibold bg-gray-300"
                   >
                     Cancel

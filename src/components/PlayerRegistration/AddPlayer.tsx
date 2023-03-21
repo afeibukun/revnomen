@@ -1,7 +1,34 @@
-import { useState, useEffect, useContext } from "react";
-import { GameContext } from "@/context/context";
+import { useState, useContext } from "react";
+import { PlayerContext } from "@/context/context";
 
-const AddPlayer = ({ singlePlayerName, handleSavePlayer, handlePlayerNameChange }: any) => {
+import PlayerInput from "./PlayerInput";
+
+const AddPlayer = () => {
+  const [playerOption, playerDispatch] = useContext(PlayerContext);
+  const [playerName, setPlayerName] = useState("");
+
+  const handlePlayerNameChange = (event: any) => {
+    setPlayerName(event.target.value);
+  };
+
+  const handleSavePlayer = (event: any) => {
+    event.preventDefault();
+    let newPlayerId = Number(playerOption.next_player_index);
+    const singlePlayer = {
+      id: newPlayerId,
+      name: playerName,
+      points: 0,
+    };
+
+    playerDispatch({
+      type: "UPDATE_MULTIPLE",
+      data: {
+        players: [...playerOption.players, singlePlayer],
+        next_player_index: newPlayerId + 1,
+      },
+    });
+    setPlayerName("");
+  };
 
   return (
     <div>
@@ -23,19 +50,12 @@ const AddPlayer = ({ singlePlayerName, handleSavePlayer, handlePlayerNameChange 
                   <div>
                     <div className="name-input">
                       <div className="mb-4">
-                        <label
-                          htmlFor="new_player_name"
-                          className="text-3xl font-medium"
-                        >
-                          Player Name
-                        </label>
-                        <input
-                          type="text"
-                          id="new_player_name"
-                          name="player_name"
-                          className="inline-block w-full py-5 px-2 rounded-md bg-gray-300 text-3xl"
-                          value={singlePlayerName}
-                          onChange={handlePlayerNameChange}
+                        <PlayerInput
+                          inputId="new_player_name"
+                          inputName="player_name"
+                          inputLabel="Player Name"
+                          playerName={playerName}
+                          handlePlayerNameChange={handlePlayerNameChange}
                         />
                       </div>
                     </div>

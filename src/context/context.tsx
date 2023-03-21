@@ -1,35 +1,34 @@
 import { createContext, useState, useReducer, type Dispatch } from "react";
-import gameDataReducer from "@/lib/gameDataReducer";
+import gameReducer from "@/reducer/gameReducer";
+import {
+  GAME_INITIAL_STATE,
+  PLAYER_INITIAL_STATE,
+  TURN_INITIAL_STATE,
+} from "./contextInitialState";
 
 export const GameContext = createContext({} as any);
-export const GameDispatchContext = createContext({} as Dispatch<any>);
-
-export const INITIAL_STATE = {
-  game_id: null,
-  is_player_registration_complete:false,
-  is_initializing:false,
-  is_hidden_names_loaded:false,
-  is_ready:false,
-  has_started: false,
-  players: [
-  ],
-  next_player_index:1,
-  hidden_noun: [],
-  turns: [],
-  active_player_id:1,
-  current_turn: 0,
-  is_completed: false,
-  winner: null,
-};
+export const PlayerContext = createContext({} as any);
+export const TurnContext = createContext({} as any);
 
 function Context({ children }: any) {
-  const [gameData, dispatch] = useReducer(gameDataReducer, INITIAL_STATE);
+  // const [game, dispatch] = useReducer(gameReducer, GAME_INITIAL_STATE);
+  // const [player, dispatch] = useReducer(
+  //   gameReducer,
+  //   PLAYER_INITIAL_STATE
+  // );
+  // const [turn, dispatchTurn] = useReducer(gameReducer, TURN_INITIAL_STATE);
 
   return (
-    <GameContext.Provider value={gameData}>
-      <GameDispatchContext.Provider value={dispatch}>
-        {children}
-      </GameDispatchContext.Provider>
+    <GameContext.Provider value={useReducer(gameReducer, GAME_INITIAL_STATE)}>
+      <PlayerContext.Provider
+        value={useReducer(gameReducer, PLAYER_INITIAL_STATE)}
+      >
+        <TurnContext.Provider
+          value={useReducer(gameReducer, TURN_INITIAL_STATE)}
+        >
+          {children}
+        </TurnContext.Provider>
+      </PlayerContext.Provider>
     </GameContext.Provider>
   );
 }

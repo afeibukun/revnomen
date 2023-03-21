@@ -1,8 +1,8 @@
-export default function gameDataReducer(gameData: any, action: any) {
+export default function gameReducer(gameContext: any, action: any) {
   switch (action.type) {
     case "SAVE_DATA": {
       return [
-        ...gameData,
+        ...gameContext,
         {
           id: action.id,
           text: action.text,
@@ -11,15 +11,15 @@ export default function gameDataReducer(gameData: any, action: any) {
       ];
     }
     case "UPDATE_DATA": {
-      gameData[action.key] = action.data;
-      return gameData;
+      gameContext[action.key] = action.data;
+      return gameContext;
     }
     case "UPDATE_MULTIPLE": {
-        return {...gameData, ...action.data};
-      }
+      return { ...gameContext, ...action.data };
+    }
 
     case "changed": {
-      return gameData.map((t: any) => {
+      return gameContext.map((t: any) => {
         if (t.id === action.task.id) {
           return action.task;
         } else {
@@ -28,7 +28,7 @@ export default function gameDataReducer(gameData: any, action: any) {
       });
     }
     case "deleted": {
-      return gameData.filter((t: any) => t.id !== action.id);
+      return gameContext.filter((t: any) => t.id !== action.id);
     }
     default: {
       throw Error("Unknown action: " + action.type);
